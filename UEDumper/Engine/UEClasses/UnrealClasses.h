@@ -894,13 +894,21 @@ public:
 	/** Name of this field class */
 	FName Name;
 
+#if UE_VERSION >= UE_5_07 // They moved it in 5.7 for some reason
+	/** Class flags */
+	EClassFlags ClassFlags;
+#endif
+
 	/** Unique Id of this field class (for casting) */
 	uint64_t Id;
 
 	/** Cast flags used for casting to other classes */
 	uint64_t CastFlags;
+
+#if UE_VERSION < UE_5_07 // They moved it in 5.7 for some reason
 	/** Class flags */
 	EClassFlags ClassFlags;
+#endif
 	/** Super of this class */
 	FFieldClass* SuperClass;
 	/** Default instance of this class */

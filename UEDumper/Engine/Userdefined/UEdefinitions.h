@@ -61,6 +61,7 @@
 #define UE_5_01		10
 #define UE_5_02		11
 #define UE_5_03		12
+#define UE_5_07		16 // Fixes FFieldClass::Id offset
 
 
 /* UE version settings */
@@ -119,6 +120,7 @@
 //some UE server application enable STATS, FUObjectItem size will extend to 32
 #define STATS FALSE
 
+// See FUOBJECTITEM_OBJECTPTR_OFFSET if 'UObject* FUObjectItem::Object' isn't at index 0x0.
 #if !STATS
 #define FUOBJECTITEM_SIZE 24
 #else
@@ -166,3 +168,7 @@
 // Define this as 0x8 for example, if using GOBJECTS_XOR_ECRYPTION_KEY on Back4Blood
 // This is used when a chunk using XOR encryption has a nullptr at the start and needs padding
 #define CHUNK_PADDING 0x0
+
+// Define this as 0x8 for example, if dumping LongVinter
+// For this game 'UObject* FUObjectItem::Object' isn't at index 0x0.
+#define FUOBJECTITEM_OBJECTPTR_OFFSET 0x0
