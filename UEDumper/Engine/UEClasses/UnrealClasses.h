@@ -114,6 +114,17 @@ public:
 	static UClass* staticClass();
 };
 
+
+#if UE_VERSION >= UE_4_22
+class FStructBaseChain
+{
+public:
+	FStructBaseChain** StructBaseChainArray;
+	int32_t NumStructBasesInChainMinusOne;
+};
+typedef FStructBaseChain* PFStructBaseChain;
+#endif
+
 // https://github.com/EpicGames/UnrealEngine/blob/4.19/Engine/Source/Runtime/CoreUObject/Public/UObject/Class.h#L56
 // https://github.com/EpicGames/UnrealEngine/blob/5.3/Engine/Source/Runtime/CoreUObject/Public/UObject/Class.h#L155
 //
@@ -129,6 +140,14 @@ public:
 	UField* getNext() const;
 
 	static UClass* staticClass();
+
+#if UE_VERSION >= UE_4_22
+# if USTRUCT_FAST_ISCHILDOF_IMPL
+private:
+	FStructBaseChain** StructBaseChainArray;
+	int32_t NumStructBasesInChainMinusOne;
+# endif
+#endif
 };
 
 // https://github.com/EpicGames/UnrealEngine/blob/4.19/Engine/Source/Runtime/CoreUObject/Public/UObject/Class.h#L1495
