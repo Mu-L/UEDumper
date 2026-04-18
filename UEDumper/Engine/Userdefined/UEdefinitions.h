@@ -61,6 +61,9 @@
 #define UE_5_01		10
 #define UE_5_02		11
 #define UE_5_03		12
+#define UE_5_04   13
+#define UE_5_05   14
+#define UE_5_06   15
 #define UE_5_07		16 // Fixes FFieldClass::Id offset
 
 
