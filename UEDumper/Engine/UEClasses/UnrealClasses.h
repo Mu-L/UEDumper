@@ -150,6 +150,24 @@ private:
 #endif
 };
 
+#if UE_VERSION >= UE_5_06
+struct FNameData
+{
+    // Tag bit to show wehther a pointer is dynamically allocated, or points to a static allocation
+    static inline constexpr uintptr_t TagDynamic = 0x1;
+
+    // Mask to retrieve a readable pointer from the tagged pointer regardless of whether it is static or dynamic
+    static inline constexpr uintptr_t MaskPointer = ~0x1;
+
+    FName* Names;     // WARNING: CAN BE TAGGED
+    int64_t* Values; // WARNING: CAN BE TAGGED
+    int32_t NumValues;
+};
+using FEnumDataType = FNameData;
+#else
+using FEnumDataType = TArray<TPair<FName, int64_t>>;
+#endif // UE_VERSION >= UE_5_06
+
 // https://github.com/EpicGames/UnrealEngine/blob/4.19/Engine/Source/Runtime/CoreUObject/Public/UObject/Class.h#L1495
 // https://github.com/EpicGames/UnrealEngine/blob/5.3/Engine/Source/Runtime/CoreUObject/Public/UObject/Class.h#L1999
 //
@@ -171,7 +189,7 @@ public:
 	FString							CppType;
 
 	/** List of pairs of all enum names and values. */
-	TArray<TPair<FName, int64_t>>	Names;
+	FEnumDataType                    Names;
 
 	/** How the enum was originally defined. */
 	ECppForm						CppForm;
